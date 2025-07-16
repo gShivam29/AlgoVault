@@ -1,7 +1,8 @@
 import question from "../models/question";
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
-const Questions = express();
+import { verifyJWT } from "../middlewares/verifyJWT";
+const Questions = express.Router();
 
 // POST endpoint to save a new question
 Questions.post("/", async (req: Request, res: Response) => {
@@ -28,7 +29,7 @@ Questions.post("/", async (req: Request, res: Response) => {
 });
 
 // GET endpoint to fetch questions by userId
-Questions.get("/", async (req: Request, res: Response): Promise<any> => {
+Questions.get("/", verifyJWT, async (req: Request, res: Response): Promise<any> => {
   try {
     const { userId } = req.query; // Use req.query for GET requests
 

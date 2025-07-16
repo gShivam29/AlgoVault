@@ -3,7 +3,8 @@ import CollapsibleCategories from "../components/CollapsibleCategories";
 import Modal from "../components/Modal";
 import MainForm from "../components/MainForm";
 import axios from "axios";
-import "../styles/home.css"
+import "../styles/home.css";
+// import GoogleLogin from "../components/GoogleLogin";
 type Question = {
   _id: string;
   title: string;
@@ -45,6 +46,7 @@ const fetchQuestions = async (userId: string): Promise<any> => {
   try {
     const response = await axios.get("http://localhost:3000/api/questions", {
       params: { userId },
+      withCredentials: true,
     });
     return response.data;
   } catch (err) {
@@ -54,6 +56,7 @@ const fetchQuestions = async (userId: string): Promise<any> => {
 };
 export default function Home() {
   const [showForm, setShowForm] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [difficulty, setDifficulty] = useState("");
@@ -123,8 +126,12 @@ export default function Home() {
           onCancel={() => alert("Cancel clicked")}
         />
       </Modal>
-
-      <div className="categories" style={{  }}>
+      {/* <Modal isOpen={showLogin} onClose={() => setShowLogin(false)}>
+          <GoogleLogin onLogin={(user) => {
+            alert(`Logged in successfully as ${user.name} (${user.email})`);
+          }}/>
+      </Modal> */}
+      <div className="categories" style={{}}>
         <CollapsibleCategories questionsByCategory={questionsByCategory} />
       </div>
     </div>

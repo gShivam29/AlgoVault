@@ -11,3 +11,10 @@ const questionSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 export default mongoose.model('Question', questionSchema);
+
+
+// userId: {
+//     type: mongoose.Schema.Types.ObjectId,  // Reference to the User collection
+//     ref: 'User',  // Refers to the User model
+//     required: true,  // Every question must be associated with a user
+//   }

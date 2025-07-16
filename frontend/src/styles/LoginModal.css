@@ -1,0 +1,15 @@
+.login-modal{
+    height: 100%;
+    /* fill .ModalContent vertically */
+    width: 100%;
+    /* fill .ModalContent horizontally */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    box-sizing: border-box;
+    color: white;
+    padding: 0;
+    align-items: center;
+    /* no extra padding – the modal already has it */
+}
