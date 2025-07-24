@@ -7,6 +7,8 @@ import LandingPage from "./pages/LandingPage"; // This could be a page without N
 import Home from "./pages/Home";
 import QuestionPage from "./pages/QuestionPage";
 import Layout from "./components/Layout"; // Import Layout
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 // console.log(googleClientId);
@@ -16,18 +18,24 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     {/* Wrap the Router with GoogleOAuthProvider and pass the environment variable */}
     <GoogleOAuthProvider clientId={clientId}>
+      <AuthProvider>
       <Router>
         <Routes>
           {/* Routes that do not need the layout */}
+          <Route element = {<ProtectedRoute />}>
           <Route path="/questions/:id" element={<QuestionPage />} />
+          </Route>
 
           {/* Use Layout for pages that need the Navbar */}
           <Route element={<Layout />}>
             <Route path="/" element={<LandingPage />} />
+            <Route element = {<ProtectedRoute />}>
             <Route path="/home" element={<Home />} />
+            </Route>
           </Route>
         </Routes>
       </Router>
+      </AuthProvider>
     </GoogleOAuthProvider>
   </StrictMode>
 );

@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import User from "../models/users"; // Assuming this is correct
 import jwt from "jsonwebtoken";
 import { OAuth2Client } from "google-auth-library";
+import { verifyJWT } from "../middlewares/verifyJWT";
 
 // type JwtPayload = {
 //   sub: string; //subject
@@ -100,4 +101,22 @@ app.post("/login", async (req: Request, res: Response): Promise<any> => {
   }
 });
 
+app.post("/logout", (req: Request, res: Response) => {
+  res.clearCookie("JWTtoken", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+    path: "/",
+  });
+  res.status(200).json({ message: "Logged Out Successfully" });
+});
+
+app.get("/verify", verifyJWT, (req: Request, res: Response) => {
+  if (!req.user) {
+    res.status(401).json({ success: false, user: null });
+    return;
+  }
+  const { userID, name } = req.user; //from verifyJWT
+  res.status(200).json({ success: true, user: { userID, name } });
+});
 export default app;

@@ -39,7 +39,7 @@ export default function QuestionPage() {
     setError(null);
 
     axios
-      .get(`http://localhost:3000/api/questions/${id}`)
+      .get(`http://localhost:3000/api/questions/${id}`, {withCredentials: true})
       .then((res) => {
         setQuestion(res.data);
         setLoading(false);
@@ -172,7 +172,8 @@ export default function QuestionPage() {
                 axios
                   .put(
                     `http://localhost:3000/api/questions/${id}`,
-                    updatedQuestion
+                    updatedQuestion,
+                    {withCredentials: true}
                   )
                   .then((res) => {
                     setQuestion(res.data.question); // update state with latest info

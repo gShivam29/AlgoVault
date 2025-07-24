@@ -5,6 +5,7 @@ import cors from "cors";
 import Questions from "./routes/Questions";
 import loginRoute from "./routes/Login";
 import cookieParser from "cookie-parser";
+import { verifyJWT } from "./middlewares/verifyJWT";
 
 dotenv.config({ path: "../.env" });
 const app = express();
@@ -12,7 +13,7 @@ const app = express();
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use("/api/questions", Questions);
+app.use("/api/questions", verifyJWT, Questions);
 app.use("/api/auth", loginRoute);
 
 const uri = process.env.MONGO_URI;
